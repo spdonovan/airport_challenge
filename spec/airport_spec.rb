@@ -6,5 +6,10 @@ describe Airport do
 
   it { is_expected.to respond_to :plane_take_off }
 
+  it 'expects to receive take off clear from plane' do
+    plane = subject.plane_take_off
+    expect(plane).to be_take_off_clear
+  end
+
 end
   
