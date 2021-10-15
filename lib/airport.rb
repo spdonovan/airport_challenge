@@ -2,13 +2,16 @@ require_relative 'plane'
 
 class Airport
 
-  def land_plane
+  #this writes a method on any instances of the Airport class
+  attr_reader :plane
 
+  def land_plane(plane)
+    @plane = plane
   end
 
   def plane_take_off
     Plane.new
-
   end
+
 
 end
