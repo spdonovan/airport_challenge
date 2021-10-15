@@ -1,18 +1,25 @@
 require 'airport'
 
+describe 'initialization' do
+  subject { Airport.new }
+  let (:plane) { Plane.new }
+  it 'defaults capacity' do
+    Airport::DEFAULT_CAPACITY.times do
+      subject.land_plane(plane)
+    end
+    expect { subject.land_plane(plane) }.to raise_error 'Airport at capacity'
+  end
+end
+
 describe Airport do
-  # checking instance of airport responds to land and take off methods
+  #checking the airport has default capacity
+  it 'has default capacity' do
+    expect(subject.capacity).to eq Airport::DEFAULT_CAPACITY
+  end
+  #checking instance of airport responds to land and take off methods
   it { is_expected.to respond_to(:land_plane).with(1).argument }
 
   it { is_expected.to respond_to :plane_take_off }
-
-  it { is_expected.to respond_to(:plane) }
-
-  it 'expects to land a plane in the airport' do
-    plane = Plane.new
-    subject.land_plane(plane)
-    expect(subject.plane).to eq @planes
-  end
 
   it 'expects to receive take off clear from plane' do
     plane = Plane.new
@@ -27,8 +34,10 @@ describe Airport do
 
   describe '#land_plane' do
     it 'raises an error when the airport is full' do
-    50.times{subject.land_plane(Plane.new)}
-    expect { subject.land_plane Plane.new}.to raise_error 'Airport at capacity'
+      Airport::DEFAULT_CAPACITY.times do
+      subject.land_plane Plane.new
+      end
+      expect { subject.land_plane Plane.new}.to raise_error 'Airport at capacity'
     end
   end
 
